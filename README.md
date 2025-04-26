@@ -34,7 +34,7 @@ Follow the steps below to set up and run the project locally.
     ```bash
     php bin/console doctrine:migrations:migrate
     ```
-6. Load data fixtures:
+6. Seed the database
     ```bash
     php bin/console doctrine:fixtures:load
     ```
