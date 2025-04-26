@@ -1,0 +1,56 @@
+<div class="container">
+  <h1>Enter Your Details</h1>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <label for="name">Name</label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      [(ngModel)]="user.name"
+      #nameModel="ngModel"
+      required
+    />
+    <div class="error" *ngIf="nameModel.invalid && nameModel.touched">
+      Name is required.
+    </div>
+
+    <label for="sectors">Sectors</label>
+    <select
+      id="sectors"
+      name="sectors"
+      multiple
+      size="8"
+      [(ngModel)]="user.sectors"
+      #sectorsModel="ngModel"
+      required
+    >
+      <option *ngFor="let s of sectors" [value]="s.id">
+        {{ s.name }}
+      </option>
+    </select>
+
+    <div class="error" *ngIf="sectorsModel.invalid && sectorsModel.touched">
+      Select at least one sector.
+    </div>
+
+    <label class="checkbox">
+      <input
+        type="checkbox"
+        name="agreeTerms"
+        [(ngModel)]="user.agreeTerms"
+        #termsModel="ngModel"
+        required
+      />
+      I agree to terms
+    </label>
+    <div class="error" *ngIf="termsModel.invalid && termsModel.touched">
+      You must agree to terms.
+    </div>
+
+    <button type="submit">Save</button>
+
+    <div class="success" *ngIf="saved">Data saved successfully!</div>
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </form>
+</div>
