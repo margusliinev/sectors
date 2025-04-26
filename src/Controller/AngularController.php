@@ -15,12 +15,17 @@ class AngularController
     )]
     public function index(): Response
     {
-        $filePath = dirname(__DIR__, 2) . '/public/app/browser/index.html';
+        $filePath = $this->getAngularIndexPath();
 
         if (!file_exists($filePath)) {
-            return new Response('Angular app not found', 404);
+            return new Response('Angular app not found', Response::HTTP_NOT_FOUND);
         }
 
-        return new Response(file_get_contents($filePath), 200, ['Content-Type' => 'text/html']);
+        return new Response(file_get_contents($filePath), Response::HTTP_OK, ['Content-Type' => 'text/html']);
+    }
+
+    private function getAngularIndexPath(): string
+    {
+        return dirname(__DIR__, 2) . '/public/app/browser/index.html';
     }
 }

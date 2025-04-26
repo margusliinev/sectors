@@ -13,14 +13,11 @@ class SectorController extends AbstractController
     public function getSectors(SectorRepository $sectorRepository): JsonResponse
     {
         $sectors = $sectorRepository->findAll();
-        $data = [];
 
-        foreach ($sectors as $sector) {
-            $data[] = [
-                'id' => $sector->getId(),
-                'name' => $sector->getName(),
-            ];
-        }
+        $data = array_map(fn($sector) => [
+            'id' => $sector->getId(),
+            'name' => $sector->getName(),
+        ], $sectors);
 
         return $this->json($data);
     }
