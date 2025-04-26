@@ -53,7 +53,17 @@ class UserController extends AbstractController
     #[Route('/api/users/{id}', name: 'get_user_by_id', methods: ['GET'])]
     public function getUserById(User $user): JsonResponse
     {
-        return $this->json($this->formatUserResponse($user));
+        $sectors = [];
+        foreach ($user->getSectors() as $sector) {
+            $sectors[] = $sector->getId();
+        }
+
+        return $this->json([
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'agreeTerms' => $user->isAgreeTerms(),
+            'sectors' => $sectors,
+        ]);
     }
 
     private function validateRequestData(Request $request): ?array
